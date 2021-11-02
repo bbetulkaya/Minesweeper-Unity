@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEditor;
 public class GridSystem : MonoBehaviour
 {
-    // Public variables
-    [Header("Grid Size")]
-    public int gridSize;
 
+    public int gridSize;
 
     private int _gridSize => gridSize;
     private BaseGrid[,] gridArray;
@@ -17,6 +15,7 @@ public class GridSystem : MonoBehaviour
     {
         GameObject parentGridObject = new GameObject();
         parentGridObject.name = "Grid Array";
+        CreatePrefab(parentGridObject);
 
         gridArray = new BaseGrid[_gridSize, _gridSize];
 
@@ -30,15 +29,25 @@ public class GridSystem : MonoBehaviour
                 newGridObject.AddComponent<SpriteRenderer>();
                 newGridObject.transform.SetParent(parentGridObject.transform);
 
-                BaseGrid newGrid = new BaseGrid(newGridObject.name, newGridObject.GetComponent<SpriteRenderer>());
+                PrefabUtility.ApplyPrefabInstance(parentGridObject, InteractionMode.UserAction);
 
+                BaseGrid newGrid = new BaseGrid(newGridObject.name, newGridObject.GetComponent<SpriteRenderer>().sprite);
                 gridArray[i, j] = newGrid;
             }
         }
 
         Debug.Log(gridArray[0, 0].GridName);
-        Debug.Log(gridArray[0, 0].SpriteRenderer);
+        Debug.Log(gridArray[0, 0].GridSprite);
 
+    }
+
+    public void CreatePrefab(GameObject gameObject)
+    {
+        string localPath = "Assets/Prefabs/" + gameObject.name + ".prefab";
+
+        localPath = AssetDatabase.GenerateUniqueAssetPath(localPath);
+
+        PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject, localPath, InteractionMode.UserAction);
     }
 
 }

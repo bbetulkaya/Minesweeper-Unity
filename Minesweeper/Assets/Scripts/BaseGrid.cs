@@ -5,13 +5,13 @@ using UnityEngine;
 public class BaseGrid
 {
     public string GridName => _gridName;
-    public SpriteRenderer SpriteRenderer => _spriteRenderer;
+    public Sprite GridSprite => _gridSprite;
     private string _gridName;
-    private SpriteRenderer _spriteRenderer;
+    private Sprite _gridSprite;
 
-    public BaseGrid(string name, SpriteRenderer spriteRenderer)
+    public BaseGrid(string name, Sprite sprite)
     {
         this._gridName = name;
-        this._spriteRenderer = spriteRenderer;
+        this._gridSprite = sprite;
     }
 }
