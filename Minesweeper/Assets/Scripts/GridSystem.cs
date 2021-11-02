@@ -16,40 +16,36 @@ public class GridSystem : MonoBehaviour
 
     private int _gridSize => gridSize;
     private BaseGrid[,] _gridArray;
-    
+
 
     [ContextMenu("Create Grid")]
     public void CreateGrid()
     {
+        _gridArray = new BaseGrid[_gridSize, _gridSize];
+
         GameObject parentGridObject = new GameObject();
         parentGridObject.name = "Grid Array";
         CreatePrefab(parentGridObject);
 
-        _gridArray = new BaseGrid[_gridSize, _gridSize];
+        CreateGridItem(parentGridObject);
+        ShowGrid();
+    }
 
+    public void CreateGridItem(GameObject parent)
+    {
         for (int i = 0; i < _gridArray.GetLength(0); i++)
         {
             for (int j = 0; j < _gridArray.GetLength(1); j++)
             {
+                string newGridName = "grid_" + i.ToString() + j.ToString();
+                GameObject gameObject = CreateGameObject(parent, newGridName);
 
-                GameObject newGridObject = new GameObject();
-                newGridObject.name = "grid_" + i.ToString() + j.ToString();
-                var spriteRenderer = newGridObject.AddComponent<SpriteRenderer>();
-                spriteRenderer.sprite = defaultSprite;
-                newGridObject.transform.SetParent(parentGridObject.transform);
-
-                PrefabUtility.ApplyPrefabInstance(parentGridObject, InteractionMode.UserAction);
-
-
-
-                BaseGrid newGrid = new BaseGrid(newGridObject.name, newGridObject.GetComponent<SpriteRenderer>().sprite, newGridObject.transform);
+                BaseGrid newGrid = new BaseGrid(gameObject.name, gameObject.GetComponent<SpriteRenderer>().sprite, gameObject.transform);
                 _gridArray[i, j] = newGrid;
             }
         }
-
-        ShowGrid();
     }
-
+    
     public void CreatePrefab(GameObject gameObject)
     {
         string localPath = "Assets/Prefabs/" + gameObject.name + ".prefab";
@@ -59,6 +55,18 @@ public class GridSystem : MonoBehaviour
         PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject, localPath, InteractionMode.UserAction);
     }
 
+    public GameObject CreateGameObject(GameObject parent, string name)
+    {
+        GameObject newGameObject = new GameObject();
+        newGameObject.name = name;
+        var spriteRenderer = newGameObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = defaultSprite;
+        newGameObject.transform.SetParent(parent.transform);
+
+        PrefabUtility.ApplyPrefabInstance(parent, InteractionMode.UserAction);
+        return newGameObject;
+
+    }
     public void ShowGrid()
     {
         float width = (_gridArray.GetLength(0)) * distanceX;
