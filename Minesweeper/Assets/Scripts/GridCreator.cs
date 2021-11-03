@@ -4,23 +4,26 @@ using UnityEngine;
 
 // custom namespaces
 using Utilities;
-public class GridSystem : MonoBehaviour
+public class GridCreator : MonoBehaviour
 {
-    public int gridSize;
-    public Sprite defaultSprite;
-
-
-    [Header("Sprite Distance")]
-    [Range(0f, 5f)]
-    public float distanceX;
-    [Range(0f, 5f)]
-    public float distanceY;
-
-    private int _gridSize => gridSize;
+    private int _gridSize;
     private BaseGrid[,] _gridArray;
 
+    private float _distanceX;
+    private float _distanceY;
 
-    [ContextMenu("Create Grid")]
+    private Sprite _defaultSprite;
+
+    public void SetGridSettings(GridSettings settings)
+    {
+        _gridSize = settings.gridSize;
+        _distanceX = settings.distanceX;
+        _distanceY = settings.distanceY;
+        _defaultSprite = settings.defaultSprite;
+
+        _gridArray = new BaseGrid[_gridSize, _gridSize];
+    }
+
     public void CreateGrid()
     {
         _gridArray = new BaseGrid[_gridSize, _gridSize];
@@ -41,8 +44,8 @@ public class GridSystem : MonoBehaviour
             {
                 string newGridName = "grid_" + i.ToString() + j.ToString();
                 GameObject gameObject = Utilities.GridSystemUtilities.CreateGameObject(parent, newGridName);
-                Utilities.GridSystemUtilities.SetSpriteRenderer(gameObject, defaultSprite);
-                
+                Utilities.GridSystemUtilities.SetSpriteRenderer(gameObject, _defaultSprite);
+
                 BaseGrid newGrid = new BaseGrid(gameObject.name, gameObject.GetComponent<SpriteRenderer>().sprite, gameObject.transform);
                 _gridArray[i, j] = newGrid;
             }
@@ -51,7 +54,7 @@ public class GridSystem : MonoBehaviour
 
     private void ShowGrid()
     {
-        float width = (_gridArray.GetLength(0)) * distanceX;
+        float width = (_gridArray.GetLength(0)) * _distanceX;
 
         float currentX = 0;
         float currentY = 0;
@@ -66,19 +69,19 @@ public class GridSystem : MonoBehaviour
                     position = new Vector3(currentX, currentY, 0);
                     _gridArray[i, j].GridTransform.position = position;
 
-                    currentX = currentX + distanceX;
+                    currentX = currentX + _distanceX;
 
                 }
                 else
                 {
                     currentX = 0;
-                    currentY = currentY - distanceY;
+                    currentY = currentY - _distanceY;
 
                     Vector3 position = _gridArray[i, j].GridTransform.position;
                     position = new Vector3(0, currentY, 0);
                     _gridArray[i, j].GridTransform.position = position;
 
-                    currentX = currentX + distanceX;
+                    currentX = currentX + _distanceX;
 
                 }
             }
