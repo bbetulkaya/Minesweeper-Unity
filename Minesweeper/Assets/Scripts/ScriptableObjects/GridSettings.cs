@@ -6,6 +6,7 @@ using UnityEngine;
 public class GridSettings : ScriptableObject
 {
     public int gridSize;
+    public int numberOfMines;
     public Sprite defaultSprite;
 
 
@@ -14,5 +15,4 @@ public class GridSettings : ScriptableObject
     public float distanceX;
     [Range(0f, 5f)]
     public float distanceY;
-
 }
