@@ -4,7 +4,7 @@ using UnityEngine;
 
 // custom namespaces
 using Utilities;
-public class GridSystem : MonoBehaviour
+public class GridArray : MonoBehaviour
 {
     public int gridSize;
     public Sprite defaultSprite;
