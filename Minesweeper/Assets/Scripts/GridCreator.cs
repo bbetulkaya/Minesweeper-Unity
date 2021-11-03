@@ -26,21 +26,33 @@ public class GridCreator : MonoBehaviour
         _gridArray = new BaseGrid[_gridSize, _gridSize];
     }
 
-    public void CreateGrid()
+    public bool CreateGrid()
     {
+        bool isGridCreated;
+
         _gridArray = new BaseGrid[_gridSize, _gridSize];
 
         GameObject parentGridObject = new GameObject();
         parentGridObject.name = "Grid Array";
         Utilities.GridSystemUtilities.CreatePrefab(parentGridObject);
 
-        CreateGridItem(parentGridObject);
-        PlaceMines();
-        ShowGrid();
+        if (CreateGridItem(parentGridObject) && PlaceMines())
+        {
+            DisplayGrid();
+            isGridCreated = true;
+        }
+        else
+        {
+            isGridCreated = false;
+        }
+
+        return isGridCreated;
+
     }
 
-    private void CreateGridItem(GameObject parent)
+    private bool CreateGridItem(GameObject parent)
     {
+        int numberOfGrid = 0;
         for (int i = 0; i < _gridArray.GetLength(0); i++)
         {
             for (int j = 0; j < _gridArray.GetLength(1); j++)
@@ -51,26 +63,43 @@ public class GridCreator : MonoBehaviour
 
                 BaseGrid newGrid = new BaseGrid(gameObject.name, gameObject.GetComponent<SpriteRenderer>().sprite, gameObject.transform);
                 _gridArray[i, j] = newGrid;
+                numberOfGrid++;
             }
+        }
+
+        if (numberOfGrid == _gridSize * _gridSize)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    private void PlaceMines()
+    private bool PlaceMines()
     {
-
-        for (int i = 0; i <_numberOfMines; i++)
+        int mineCount = 0;
+        for (int i = 0; i < _numberOfMines; i++)
         {
             int randX = Random.Range(0, _gridSize);
             int randY = Random.Range(0, _gridSize);
 
             _gridArray[randX, randY].SetGridType(BaseGrid.GridType.Mine);
-            Debug.Log(_gridArray[randX, randY].gridType);
-
+            mineCount++;
         }
 
+        if (mineCount == _numberOfMines)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    private void ShowGrid()
+    private void DisplayGrid()
     {
         float width = (_gridArray.GetLength(0)) * _distanceX;
 

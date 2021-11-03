@@ -7,16 +7,25 @@ public class Game : MonoBehaviour
     public GridSettings gridSettings;
     GridCreator grid;
 
+    public bool isGameReady = false;
     void Start()
     {
         grid = GetComponent<GridCreator>();
         grid.SetGridSettings(gridSettings);
-        grid.CreateGrid();
+        isGameReady = grid.CreateGrid();
 
         // for (int i = 0; i < 10; i++)
         // {
         //     PlaceMines();
         // }
+    }
+
+    void Update()
+    {
+        if (isGameReady)
+        {
+            Debug.Log("Game Start!");
+        }
     }
 
     // void PlaceMines()
