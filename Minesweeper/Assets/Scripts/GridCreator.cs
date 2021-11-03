@@ -13,6 +13,7 @@ public class GridCreator : MonoBehaviour
     private float _distanceY;
 
     private Sprite _defaultSprite;
+    private int _numberOfMines;
 
     public void SetGridSettings(GridSettings settings)
     {
@@ -20,6 +21,7 @@ public class GridCreator : MonoBehaviour
         _distanceX = settings.distanceX;
         _distanceY = settings.distanceY;
         _defaultSprite = settings.defaultSprite;
+        _numberOfMines = settings.numberOfMines;
 
         _gridArray = new BaseGrid[_gridSize, _gridSize];
     }
@@ -33,6 +35,7 @@ public class GridCreator : MonoBehaviour
         Utilities.GridSystemUtilities.CreatePrefab(parentGridObject);
 
         CreateGridItem(parentGridObject);
+        PlaceMines();
         ShowGrid();
     }
 
@@ -52,6 +55,21 @@ public class GridCreator : MonoBehaviour
         }
     }
 
+    private void PlaceMines()
+    {
+
+        for (int i = 0; i <_numberOfMines; i++)
+        {
+            int randX = Random.Range(0, _gridSize);
+            int randY = Random.Range(0, _gridSize);
+
+            _gridArray[randX, randY].SetGridType(BaseGrid.GridType.Mine);
+            Debug.Log(_gridArray[randX, randY].gridType);
+
+        }
+
+    }
+
     private void ShowGrid()
     {
         float width = (_gridArray.GetLength(0)) * _distanceX;
@@ -63,6 +81,7 @@ public class GridCreator : MonoBehaviour
         {
             for (int j = 0; j < _gridArray.GetLength(1); j++)
             {
+                Debug.Log(_gridArray[i, j].gridType);
                 if (currentX != width)
                 {
                     Vector3 position = _gridArray[i, j].GridTransform.position;
@@ -70,6 +89,7 @@ public class GridCreator : MonoBehaviour
                     _gridArray[i, j].GridTransform.position = position;
 
                     currentX = currentX + _distanceX;
+
 
                 }
                 else
