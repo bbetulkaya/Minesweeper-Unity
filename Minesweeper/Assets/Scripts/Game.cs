@@ -14,15 +14,15 @@ public class Game : MonoBehaviour
         grid = GetComponent<GridCreator>();
         grid.SetGridSettings(gridSettings);
         isGameReady = grid.CreateGrid();
+
+        if (!isGameReady)
+        {
+            Debug.Log("Game board is not ready!");
+        }
     }
 
     void Update()
     {
-        // if (isGameReady)
-        // {
-        //     Debug.Log("Game Start!");
-        // }
-
         if (isGameReady)
         {
             if (Input.GetMouseButtonDown(0))
@@ -37,6 +37,11 @@ public class Game : MonoBehaviour
                 }
             }
         }
+        // For Debug!
+        if (Input.GetMouseButtonDown(1))
+        {
+            ShowMinePlace();
+        }
 
     }
 
@@ -48,13 +53,22 @@ public class Game : MonoBehaviour
 
         if (grid.gridArray[gridX, gridY].gridType == BaseGrid.GridType.Mine)
         {
-            grid.gridArray[gridX, gridY].GridSprite = spriteCollection.mine;
-            Debug.Log(grid.gridArray[gridX, gridY].GridSprite);
-            // Debug.Log("MINE!!");
+            DisplayAllMinePlace();
         }
+    }
 
-        // Debug.Log("("+ gridX + " "+  gridY + ")");
-
-        // grid.gridArray[gridX,gridY]
+    public void DisplayAllMinePlace()
+    {
+        for (int i = 0; i < grid.mineArray.Length; i++)
+        {
+            grid.mineArray[i].GridSprite = spriteCollection.mine;
+        }
+    }
+    public void ShowMinePlace()
+    {
+        for (int i = 0; i < grid.mineArray.Length; i++)
+        {
+            Debug.Log(grid.mineArray[i].GridName);
+        }
     }
 }

@@ -7,8 +7,10 @@ using Utilities;
 public class GridCreator : MonoBehaviour
 {
     public BaseGrid[,] gridArray => _gridArray;
+    public BaseGrid[] mineArray => _mineArray;
     private int _gridSize;
     private BaseGrid[,] _gridArray;
+    private BaseGrid[] _mineArray;
 
     private float _distanceX;
     private float _distanceY;
@@ -81,7 +83,9 @@ public class GridCreator : MonoBehaviour
 
     private bool PlaceMines()
     {
+        _mineArray = new BaseGrid[_numberOfMines];
         int mineCount = 0;
+        
         for (int i = 0; i < _numberOfMines; i++)
         {
             int randX = Random.Range(0, _gridSize);
@@ -90,7 +94,7 @@ public class GridCreator : MonoBehaviour
             if (_gridArray[randX, randY].gridType == BaseGrid.GridType.Space)
             {
                 _gridArray[randX, randY].SetGridType(BaseGrid.GridType.Mine);
-                Debug.Log("mine =" + randX + " " + randY);
+                _mineArray[mineCount] = _gridArray[randX, randY];
                 mineCount++;
             }
             else
@@ -108,7 +112,6 @@ public class GridCreator : MonoBehaviour
             return false;
         }
     }
-
     private void DisplayGrid()
     {
         float width = (_gridArray.GetLength(0)) * _distanceX;
@@ -120,7 +123,6 @@ public class GridCreator : MonoBehaviour
         {
             for (int j = 0; j < _gridArray.GetLength(1); j++)
             {
-                Debug.Log(_gridArray[i, j].gridType);
                 if (currentX != width)
                 {
                     Vector3 position = _gridArray[i, j].GridTransform.position;
@@ -149,6 +151,5 @@ public class GridCreator : MonoBehaviour
     public void SetGridSprite(BaseGrid grid, Sprite sprite)
     {
         grid.GridSprite = sprite;
-        // DisplayGrid(grid);
     }
 }
