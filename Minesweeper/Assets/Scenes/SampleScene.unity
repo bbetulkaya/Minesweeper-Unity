@@ -166,6 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSettings: {fileID: 11400000, guid: 04427972782412a499f3ad6332072b18, type: 2}
+  spriteCollection: {fileID: 11400000, guid: eb82c77a604d574459623b80451229d1, type: 2}
+  isGameReady: 0
 --- !u!4 &499385637
 Transform:
   m_ObjectHideFlags: 0

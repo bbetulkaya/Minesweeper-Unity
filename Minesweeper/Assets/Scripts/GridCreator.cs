@@ -6,6 +6,7 @@ using UnityEngine;
 using Utilities;
 public class GridCreator : MonoBehaviour
 {
+    public BaseGrid[,] gridArray => _gridArray;
     private int _gridSize;
     private BaseGrid[,] _gridArray;
 
@@ -57,11 +58,12 @@ public class GridCreator : MonoBehaviour
         {
             for (int j = 0; j < _gridArray.GetLength(1); j++)
             {
-                string newGridName = "grid_" + i.ToString() + j.ToString();
+                string newGridName = i.ToString() + j.ToString();
                 GameObject gameObject = Utilities.GridSystemUtilities.CreateGameObject(parent, newGridName);
                 Utilities.GridSystemUtilities.SetSpriteRenderer(gameObject, _defaultSprite);
+                gameObject.AddComponent<BoxCollider2D>();
 
-                BaseGrid newGrid = new BaseGrid(gameObject.name, gameObject.GetComponent<SpriteRenderer>().sprite, gameObject.transform);
+                BaseGrid newGrid = new BaseGrid(gameObject.name, gameObject.GetComponent<SpriteRenderer>(), gameObject.transform);
                 _gridArray[i, j] = newGrid;
                 numberOfGrid++;
             }
@@ -85,8 +87,16 @@ public class GridCreator : MonoBehaviour
             int randX = Random.Range(0, _gridSize);
             int randY = Random.Range(0, _gridSize);
 
-            _gridArray[randX, randY].SetGridType(BaseGrid.GridType.Mine);
-            mineCount++;
+            if (_gridArray[randX, randY].gridType == BaseGrid.GridType.Space)
+            {
+                _gridArray[randX, randY].SetGridType(BaseGrid.GridType.Mine);
+                Debug.Log("mine =" + randX + " " + randY);
+                mineCount++;
+            }
+            else
+            {
+                i--;
+            }
         }
 
         if (mineCount == _numberOfMines)
@@ -135,5 +145,10 @@ public class GridCreator : MonoBehaviour
                 }
             }
         }
+    }
+    public void SetGridSprite(BaseGrid grid, Sprite sprite)
+    {
+        grid.GridSprite = sprite;
+        // DisplayGrid(grid);
     }
 }

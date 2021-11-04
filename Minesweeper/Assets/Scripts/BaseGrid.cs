@@ -12,27 +12,30 @@ public class BaseGrid
     }
 
     public string GridName => _gridName;
-    public Sprite GridSprite => _gridSprite;
+    public Sprite GridSprite { get { return _spriteRenderer.sprite; } set { _spriteRenderer.sprite = (Sprite)value; } }
     public Transform GridTransform => _gridTransform;
     public GridType gridType => _gridType;
 
     private string _gridName;
-    private Sprite _gridSprite;
+    // private Sprite _gridSprite;
+    private SpriteRenderer _spriteRenderer;
     private Transform _gridTransform;
     private GridType _gridType;
 
-    public BaseGrid(string name, Sprite sprite, Transform transform)
+    public BaseGrid(string name, SpriteRenderer spriteRenderer, Transform transform)
     {
         this._gridName = name;
-        this._gridSprite = sprite;
+        // this._gridSprite = spriteRenderer.sprite;
         this._gridTransform = transform;
         this._gridType = GridType.Space;
+        this._spriteRenderer = spriteRenderer;
     }
 
     public void SetGridType(GridType type)
     {
         this._gridType = type;
     }
+
 }
 
 
