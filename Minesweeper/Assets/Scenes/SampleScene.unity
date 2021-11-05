@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520829f00a557d34899e0089e38eb858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSettings: {fileID: 11400000, guid: 04427972782412a499f3ad6332072b18, type: 2}
+  gridSettings: {fileID: 11400000, guid: 162dfa70c261135409176abe161727c0, type: 2}
   spriteCollection: {fileID: 11400000, guid: eb82c77a604d574459623b80451229d1, type: 2}
   isGameReady: 0
 --- !u!4 &499385637
