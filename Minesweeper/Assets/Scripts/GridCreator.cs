@@ -8,6 +8,7 @@ public class GridCreator : MonoBehaviour
 {
     public BaseGrid[,] gridArray => _gridArray;
     public BaseGrid[] mineArray => _mineArray;
+    public int gridSize => _gridSize;
     private int _gridSize;
     private BaseGrid[,] _gridArray;
     private BaseGrid[] _mineArray;
@@ -91,7 +92,7 @@ public class GridCreator : MonoBehaviour
             int randX = Random.Range(0, _gridSize);
             int randY = Random.Range(0, _gridSize);
 
-            if (_gridArray[randX, randY].gridType == BaseGrid.GridType.Space)
+            if (_gridArray[randX, randY].gridType == BaseGrid.GridType.Default)
             {
                 _gridArray[randX, randY].SetGridType(BaseGrid.GridType.Mine);
                 _mineArray[mineCount] = _gridArray[randX, randY];
@@ -148,8 +149,5 @@ public class GridCreator : MonoBehaviour
             }
         }
     }
-    public void SetGridSprite(BaseGrid grid, Sprite sprite)
-    {
-        grid.GridSprite = sprite;
-    }
+  
 }

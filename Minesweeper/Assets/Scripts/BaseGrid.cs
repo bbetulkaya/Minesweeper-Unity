@@ -8,7 +8,8 @@ public class BaseGrid
     {
         Mine,
         Number,
-        Space
+        Space,
+        Default
     }
 
     public string GridName => _gridName;
@@ -27,7 +28,7 @@ public class BaseGrid
         this._gridName = name;
         // this._gridSprite = spriteRenderer.sprite;
         this._gridTransform = transform;
-        this._gridType = GridType.Space;
+        this._gridType = GridType.Default;
         this._spriteRenderer = spriteRenderer;
     }
 
