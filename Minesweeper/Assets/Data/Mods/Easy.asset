@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Easy
   m_EditorClassIdentifier: 
   gridSize: 4
+  numberOfMines: 2
   defaultSprite: {fileID: 21300000, guid: 10f5706b177cea54788d8ad06045223b, type: 3}
   distanceX: 1.29
   distanceY: 1.29
-  numberOfMines: 2

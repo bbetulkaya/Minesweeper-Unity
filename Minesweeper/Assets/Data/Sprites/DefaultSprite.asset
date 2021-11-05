@@ -16,10 +16,10 @@ MonoBehaviour:
   mine: {fileID: 21300000, guid: 8cd4ab8c6cfae184590dceca76f853fb, type: 3}
   space: {fileID: 21300000, guid: 10f5706b177cea54788d8ad06045223b, type: 3}
   number:
+  - {fileID: 21300000, guid: 65600efc81f3ca44182f033bc5e1507b, type: 3}
   - {fileID: 21300000, guid: 63bff529eca0ac248815ecf7bfab4e9d, type: 3}
   - {fileID: 21300000, guid: c8abea33e109ce149badb5c2a48d0f77, type: 3}
   - {fileID: 21300000, guid: 0a43eacce4eefe141969de6a7a6bd13d, type: 3}
-  - {fileID: 21300000, guid: 5a3d1228182e4004592c2222b7bc5f9c, type: 3}
   - {fileID: 21300000, guid: 5a3d1228182e4004592c2222b7bc5f9c, type: 3}
   - {fileID: 21300000, guid: d776a3d33a2d3fd449fd9d9eb59ce9f2, type: 3}
   - {fileID: 21300000, guid: f579276e701e8a44ea5d205bd172b0fa, type: 3}
