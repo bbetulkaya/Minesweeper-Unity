@@ -60,6 +60,14 @@ public class Game : MonoBehaviour
         else
         {
             SetGridSprite(grid.gridArray[gridX, gridY], adjacentMines(gridX, gridY));
+
+            FFuncover(gridX, gridY, new bool[grid.gridSize, grid.gridSize]);
+
+            if (isFinished())
+            {
+                Debug.Log("YOU WON!");
+            }
+
         }
     }
 
@@ -117,4 +125,46 @@ public class Game : MonoBehaviour
         grid.GridSprite = spriteCollection.number[index];
     }
 
+    // Flood Fill empty elements
+    public void FFuncover(int x, int y, bool[,] visited)
+    {
+        // Coordinates in Range?
+        if (x >= 0 && y >= 0 && x < grid.gridSize && y < grid.gridSize)
+        {
+            // visited already?
+            if (visited[x, y])
+                return;
+
+            // uncover element
+            SetGridSprite(grid.gridArray[x, y], adjacentMines(x, y));
+
+            // close to a mine? then no more work needed here
+            if (adjacentMines(x, y) > 0)
+                return;
+
+            // set visited flag
+            visited[x, y] = true;
+
+            // recursion
+            FFuncover(x - 1, y, visited);
+            FFuncover(x + 1, y, visited);
+            FFuncover(x, y - 1, visited);
+            FFuncover(x, y + 1, visited);
+        }
+    }
+
+    public bool isFinished()
+    {
+        // Try to find a covered element that is no mine
+        foreach (BaseGrid grid in grid.gridArray)
+            if (isCovered(grid) && (grid.gridType != BaseGrid.GridType.Mine))
+                return false;
+        // There are none => all are mines => game won.
+        return true;
+    }
+    // Is it still covered?
+    public bool isCovered(BaseGrid grid)
+    {
+        return grid.GridSprite.name == "defaultSprite";
+    }
 }
