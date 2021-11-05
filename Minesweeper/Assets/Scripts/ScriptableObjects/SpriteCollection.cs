@@ -8,5 +8,5 @@ public class SpriteCollection : ScriptableObject
     public Sprite defaultSprite;
     public Sprite mine;
     public Sprite space;
-    public Sprite number;
+    public Sprite[] number;
 }
